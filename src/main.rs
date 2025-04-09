@@ -18,7 +18,7 @@ struct Ball {
     x_acc: f32,
     y_acc: f32,
     time: f32, // (relative, resets to 0 after every collision)
-    boundary_cor: f32, // COR that the ball has with the ground https://en.wikipedia.org/wiki/Coefficient_of_restitution
+    boundary_cor: f32, // COR that the ball has with boundaries  https://en.wikipedia.org/wiki/Coefficient_of_restitution
 }
 
 impl Ball {

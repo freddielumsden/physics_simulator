@@ -1,7 +1,7 @@
 use macroquad::prelude::*;
 use ::glam::Vec2;
 
-const G: f32 = 0.09; // Gravity constant
+const G: f32 = 0.0; // Gravity constant
 const BG_COLOR: Color = BLACK;
 const GRID_SIZE: [i32; 2] = [10, 10];
 
@@ -25,14 +25,14 @@ impl Ball {
             self.pos[0] = screen[0]-self.radius;
         } else if self.pos[0]-self.radius < 0.0 {
             self.vel[0] = -self.vel[0]*self.boundary_cor;
-            self.pos[0] = self.radius;
+            self.pos[0] = self.radius+0.1;
         }
         if self.pos[1]+self.radius > screen[1]{
             self.vel[1] = -self.vel[1]*self.boundary_cor;
             self.pos[1] = screen[1]-self.radius;
         } else if self.pos[1]-self.radius < 0.0 {
             self.vel[1] = -self.vel[1]*self.boundary_cor;
-            self.pos[1] = self.radius;
+            self.pos[1] = self.radius+0.1;
         }
         //collision w cursor detection
         let cursor = mouse_position();
@@ -49,7 +49,7 @@ impl Ball {
 fn collide(ball_1: &mut Ball, ball_2: &mut Ball) {
     // It's okay to check current frame because balls have just been updated but not displayed, so can still stop them from being inside each other for this frame
 
-    let distance =((ball_1.pos[0]-next_pos_2[0]).powf(2.0)+(next_pos_1[1]-next_pos_2[1]).powf(2.0)).sqrt(); 
+    let distance = ((ball_1.pos[0]-ball_2.pos[0]).powf(2.0)+(ball_1.pos[1]-ball_2.pos[1]).powf(2.0)).sqrt(); 
     if distance < ball_1.radius + ball_2.radius {
         /*
         let ball_1_vels = [ball_1.vel[0], ball_1.vel[1]];
@@ -113,31 +113,7 @@ fn collide(ball_1: &mut Ball, ball_2: &mut Ball) {
         ball_1.vel = new_v_1_in_norm_dir * unit_normal + v_1_in_tan_dir * unit_tangent;
         ball_2.vel = new_v_2_in_norm_dir * unit_normal + v_2_in_tan_dir * unit_tangent;
 
-        let next_pos_1 = ball_1.pos + ball_1.vel;
-        let next_pos_2 = ball_2.pos + ball_2.vel;
-        let distance =((next_pos_1[0]-next_pos_2[0]).powf(2.0)+(next_pos_1[1]-next_pos_2[1]).powf(2.0)).sqrt(); 
-
-        // Edge case where the ball's collision will cause one to push the other, so just push them back apart
-        if distance >= ball_1.radius +ball_2.radius {
-            let overlap = ((ball_1.radius + ball_2.radius) - distance)/2.0;
-
-            let m = (ball_1.pos[1]-ball_2.pos[1])/(ball_1.pos[0]-ball_2.pos[0]);
-            let theta = m.atan().abs();
-            let y_change = overlap*theta.sin();
-            let x_change = overlap*theta.cos();
-            
-            if ball_1.pos[0] <= ball_2.pos[0] {
-                ball_1.pos[0] -= x_change;
-                ball_2.pos[0] += x_change;
-                ball_1.pos[1] -= y_change;
-                ball_2.pos[1] += y_change;
-            } else {
-                ball_1.pos[0] += x_change;
-                ball_2.pos[0] -= x_change;
-                ball_1.pos[1] += y_change;
-                ball_2.pos[1] -= y_change;
-            }
-        }
+        let distance = ((ball_1.pos[0]-ball_2.pos[0]).powf(2.0)+(ball_1.pos[1]-ball_2.pos[1]).powf(2.0)).sqrt();
         
     }   
 

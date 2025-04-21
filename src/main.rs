@@ -7,7 +7,8 @@ const G: f32 = 0.0; // Gravity constant
 const BG_COLOR: Color = BLACK;
 const GRID_SIZE: [i32; 2] = [10, 10];
 
-
+// https://mq.agical.se/release-web.html how to build for html
+// 
 
 #[macroquad::main("WAZZA")]
 async fn main() {

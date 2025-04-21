@@ -1,0 +1,1 @@
+C:\Users\fredd\Documents\ProgrammingProjects\Rust\physics_simulator\target\wasm32-unknown-unknown\release\physics_simulator.wasm: C:\Users\fredd\Documents\ProgrammingProjects\Rust\physics_simulator\src\main.rs

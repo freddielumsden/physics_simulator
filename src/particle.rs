@@ -12,6 +12,7 @@ pub struct Particle {
 }
 
 impl Particle {
+    // Physics update mostly
     pub fn update(&mut self, screen: [f32; 2]) {
         self.vel += self.acc;
         self.pos += self.vel;
@@ -41,7 +42,7 @@ impl Particle {
         }
     }
 
-
+    // Resolves collisions of 2 balls
     pub fn collide(&mut self, ball_2: &mut Self) {
         // It's okay to check current frame because balls have just been updated but not displayed, so can still stop them from being inside each other for this frame
         let distance = ((self.pos[0]-ball_2.pos[0]).powf(2.0)+(self.pos[1]-ball_2.pos[1]).powf(2.0)).sqrt(); 
@@ -60,5 +61,14 @@ impl Particle {
             self.pos += dir;
             ball_2.pos -= dir;
         }  
+    }
+
+    pub fn draw(&mut self) {
+        draw_circle(
+            self.pos[0],
+            self.pos[1],
+            self.radius,
+            self.color,
+        );
     }
 }

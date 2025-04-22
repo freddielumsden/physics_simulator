@@ -5,7 +5,7 @@ mod particle;
 
 const G: f32 = 0.2; // Gravity constant
 const BG_COLOR: Color = BLACK;
-const GRID_SIZE: [i32; 2] = [10, 10];
+const GRID_SIZE: [f32; 2] = [10.0, 10.0];
 
 // https://mq.agical.se/release-web.html how to build for html
 // https://mq.agical.se/ch1-first-program.html#publish-on-the-web-if-you-want
@@ -47,12 +47,7 @@ async fn main() {
 
         let mut total_momentum = 0.0;
         for p in 0..particles.len() {
-            draw_circle(
-                particles[p].pos[0],
-                particles[p].pos[1],
-                particles[p].radius,
-                particles[p].color,
-            );
+            particles[p].draw();
 
             total_momentum += particles[p].vel.length();
         }
